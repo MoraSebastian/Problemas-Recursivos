@@ -5,16 +5,14 @@ def generarMazo():
 	return sample([(x,y) for x in ['A','2','3','4','5','6','7','8','9','10','J','Q','K'] for y in ['picas','treboles','corazones','diamantes']],52)
 
 def determinarGanador(jugador,casa):
-        print 'se determino el ganador'
-        if validacionDeVentiUna(casa)>=validacionDeVentiUna(jugador):
-                print 'Gano la casa'
-        else:
-                print 'Gano el jugador'
-
-
-def validacionDeVentiUna(mazo):
-    print contarMazo(mazo,0,11)
-    return contarMazo(mazo,0,11)
+    if validarAs(jugador)>21:
+        return '\n SE PASO EL JUGADOR \n'
+    if validarAs(casa)>21:
+        return '\n SE PASO LA CASA \n'
+    if validarAs(casa)>=validarAs(jugador):
+        return '\n GANO LA CASA'
+    else:
+        return '\n GANO EL JUGADOR'
 
 
 def buscarAs(mazo):
@@ -78,21 +76,37 @@ def jugar(mazo,jugador,casa,momento):
         else:
           print mazo
     if momento ==1:
-        print validarAs(jugador)
+        if len(jugador)==2:
+            print ('\nJUEGA JUGADOR')
+        if validarAs(jugador)>21:
+            print 'CARTAS JUGADOR ',jugador
+            print 'CARTAS CASA ',casa
+            return jugar(mazo, jugador, casa, 3)        
+        
+                       
         print jugador[1:],"carta oculta", jugador[0]
-        print casa[1:],"carta oculta", casa[0]
+        print casa[1:],"+ carta oculta..."
         if input("1 para mas cartas \n2 para parar\n") ==1 :
             return jugar(mazo[1:], jugador + [mazo[0]], casa , 1)
         else:
+            print ('SE PLANTA EL JUGADOR')
             return jugar(mazo, jugador, casa, 2)
     if momento ==2:
-        print jugador[1:],"carta oculta", jugador[0]
-        print casa[1:],"carta oculta", casa[0]
-        if input("1 para mas cartas \n2 para parar\n") ==1 :
+        if len(casa)==2:
+            print ('\nJUEGA LA CASA')
+        print 'CARTAS JUGADOR ',jugador
+        print 'CARTAS CASA ',casa
+        if validarAs(jugador)>validarAs(casa):
             return jugar(mazo[1:], jugador, casa + [mazo[0]] , 2)
         else:
-            return jugar(mazo, jugador , casa, 3)
+            print ('SE PLANTA LA CASA')
+            return jugar(mazo,jugador,casa,3)
+        
+        
     if momento ==3:
-        determinarGanador(jugador,casa)
-
-jugar(generarMazo(),[],[],0)
+        print(determinarGanador(jugador,casa))
+        
+while input('0 para jugar\n1 para salir\n')==0:
+    jugar(generarMazo(),[],[],0)
+    
+    

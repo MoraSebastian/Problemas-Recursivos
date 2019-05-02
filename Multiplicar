@@ -1,0 +1,11 @@
+def producto(n,m):
+    if m == 0:
+        return 0
+    if m == 1:
+        return n
+    else:
+        return n + producto(n,m-1)
+
+m = input()
+n = input()
+print producto(n,m)

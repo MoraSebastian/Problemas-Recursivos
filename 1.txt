@@ -1,0 +1,2 @@
+http://book.pythontips.com/en/latest/map_filter.html
+ http://www.bogotobogo.com/python/python_fncs_map_filter_reduce.php
